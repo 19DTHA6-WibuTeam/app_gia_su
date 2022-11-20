@@ -124,7 +124,7 @@ class _SessionChild2State extends State<SessionChild2> {
                                             ),
                                             Text(
                                               DateFormat('dd/MM/yyyy').format(
-                                                  sessionList[i].ngayDangKy ??
+                                                  sessionList[i].ngayBatDau ??
                                                       DateTime.now()),
                                               style: AppTextStyle.chooseText
                                                   .copyWith(

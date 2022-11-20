@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:gia_su_trung_tam_mobile/UI/account/controller/image_picker_controller.dart';
 import 'package:gia_su_trung_tam_mobile/UI/home_page/home_detail.dart';
 import 'package:gia_su_trung_tam_mobile/api/session.dart';
 import 'package:gia_su_trung_tam_mobile/api/user.dart';
@@ -11,7 +12,6 @@ import 'package:gia_su_trung_tam_mobile/models/session.dart';
 import 'package:gia_su_trung_tam_mobile/theme/colors.dart';
 import 'package:gia_su_trung_tam_mobile/theme/dimens.dart';
 import 'package:gia_su_trung_tam_mobile/theme/images.dart';
-import 'package:gia_su_trung_tam_mobile/widget/round_avatar.dart';
 import 'package:gia_su_trung_tam_mobile/widget/text_style.dart';
 
 class TutorHome extends StatefulWidget {
@@ -30,8 +30,8 @@ class _TutorHomeState extends State<TutorHome> {
     });
   }
 
+  final ProfileController controller = ProfileController();
   String name = '';
-  String avatar = '';
   var isLoaded = false;
   List<Datum> session1List = [];
   Future<void> _getData() async {
@@ -40,7 +40,7 @@ class _TutorHomeState extends State<TutorHome> {
     var user = await getUser(BaseSharedPreferences.getString('MaNguoiDung'),
         BaseSharedPreferences.getString('token'));
     name = user!.user_fullname ?? Dimens.Tutor;
-    avatar = user.avatar ?? '';
+    controller.imageURL = user.avatar ?? '';
     setState(() {
       isLoaded = true;
     });
@@ -72,33 +72,57 @@ class _TutorHomeState extends State<TutorHome> {
                 children: [
                   Row(
                     children: [
-                      avatar != ''
-                          ? SizedBox(
-                              height: mainWidth * 0.24,
-                              width: mainWidth * 0.24,
-                              child: RoundAvatar(
-                                imagePath: avatar,
-                                leftPadding: Dimens.PADDING_10,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_10,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: true,
-                              ),
-                            )
-                          : SizedBox(
-                              height: mainWidth * 0.24,
-                              width: mainWidth * 0.24,
-                              child: RoundAvatar(
-                                imagePath: Images.imageDefault,
-                                leftPadding: Dimens.PADDING_10,
-                                topPadding: Dimens.PADDING_20,
-                                rightPadding: Dimens.PADDING_10,
-                                bottomPadding: Dimens.PADDING_20,
-                                radius: Dimens.RADIUS_30,
-                                initAvatar: false,
-                              ),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: Dimens.PADDING_10,
+                            top: Dimens.PADDING_20,
+                            right: Dimens.PADDING_10,
+                            bottom: Dimens.PADDING_20),
+                        child: SizedBox(
+                          height: mainWidth * 0.17,
+                          width: mainWidth * 0.17,
+                          child: Obx(() {
+                            if (controller.isLoading.value) {
+                              return const CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(Images.imageDefault),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                )),
+                              );
+                            } else {
+                              if (controller.imageURL.length != 0) {
+                                return CachedNetworkImage(
+                                  imageUrl: controller.imageURL,
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: imageProvider,
+                                  ),
+                                  placeholder: (context, url) =>
+                                      const CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage(Images.imageDefault),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    )),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                );
+                              } else {
+                                return const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage(Images.imageDefault),
+                                );
+                              }
+                            }
+                          }),
+                        ),
+                      ),
                       SizedBox(
                         child: Padding(
                           padding: const EdgeInsets.only(
