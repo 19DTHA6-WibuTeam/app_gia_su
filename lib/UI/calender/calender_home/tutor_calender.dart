@@ -156,135 +156,165 @@ class _TutorCalenderState extends State<TutorCalender> {
                                   },
                                   child: _selectedDay.value.weekday ==
                                           calenderList[i].thoiKhoaBieu![j].maThu
-                                      ? Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: maxWidth * 0.05),
-                                          margin: EdgeInsets.only(
-                                              bottom: maxHeight * 0.01,
-                                              right: maxWidth * 0.02,
-                                              left: maxWidth * 0.02),
-                                          width: maxWidth,
-                                          height: maxHeight * 0.2,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimens.RADIUS_15),
-                                              color: AppColors.primary),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                      ? (DateTime.parse(calenderList[i]
+                                                          .ngayBatDau
+                                                          .toString())
+                                                      .compareTo(
+                                                          _selectedDay.value) <=
+                                                  0 &&
+                                              DateTime.parse(calenderList[i]
+                                                          .ngayBatDau
+                                                          .toString())
+                                                      .add(Duration(
+                                                          days: (7 *
+                                                                  calenderList[
+                                                                          i]
+                                                                      .soTuan!)
+                                                              .toInt()))
+                                                      .compareTo(
+                                                          _selectedDay.value) >=
+                                                  0)
+                                          ? Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: maxWidth * 0.05),
+                                              margin: EdgeInsets.only(
+                                                  bottom: maxHeight * 0.01,
+                                                  right: maxWidth * 0.02,
+                                                  left: maxWidth * 0.02),
+                                              width: maxWidth,
+                                              height: maxHeight * 0.2,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          Dimens.RADIUS_15),
+                                                  color: AppColors.primary),
+                                              child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceEvenly,
+                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    calenderList[i].tenMonHoc!,
-                                                    style: AppTextStyle
-                                                        .chooseText
-                                                        .copyWith(
-                                                            fontSize:
-                                                                maxWidth * 0.07,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: AppColors
-                                                                .white),
-                                                  ),
-                                                  Row(
+                                                  Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
-                                                            .center,
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
                                                     children: [
-                                                      Icon(
-                                                        Icons
-                                                            .access_time_rounded,
-                                                        color: AppColors.white,
-                                                        size: maxWidth * 0.05,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
                                                       Text(
-                                                        //đá
-                                                        "${calenderList[i].thoiKhoaBieuTomTat!.gioBatDau!.substring(0, 5)} - ${calenderList[i].thoiKhoaBieuTomTat!.gioKetThuc!.substring(0, 5)}",
+                                                        calenderList[i]
+                                                            .tenMonHoc!,
                                                         style: AppTextStyle
                                                             .chooseText
                                                             .copyWith(
                                                                 fontSize:
                                                                     maxWidth *
-                                                                        0.05),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.location_on,
-                                                        color: AppColors.white,
-                                                        size: maxWidth * 0.05,
+                                                                        0.07,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: AppColors
+                                                                    .white),
                                                       ),
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SizedBox(
-                                                        width: maxWidth * 0.695,
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            calenderList[i]
-                                                                .diaChi!,
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .access_time_rounded,
+                                                            color:
+                                                                AppColors.white,
+                                                            size:
+                                                                maxWidth * 0.05,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            //đá
+                                                            "${calenderList[i].thoiKhoaBieuTomTat!.gioBatDau!.substring(0, 5)} - ${calenderList[i].thoiKhoaBieuTomTat!.gioKetThuc!.substring(0, 5)}",
                                                             style: AppTextStyle
                                                                 .chooseText
                                                                 .copyWith(
                                                                     fontSize:
                                                                         maxWidth *
-                                                                            0.04),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .visible,
+                                                                            0.05),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.location_on,
+                                                            color:
+                                                                AppColors.white,
+                                                            size:
+                                                                maxWidth * 0.05,
                                                           ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SizedBox(
+                                                            width: maxWidth *
+                                                                0.695,
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                calenderList[i]
+                                                                    .diaChi!,
+                                                                style: AppTextStyle
+                                                                    .chooseText
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            maxWidth *
+                                                                                0.04),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .visible,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    maxWidth *
+                                                                        0.02),
+                                                        height:
+                                                            maxHeight * 0.15,
+                                                        width: 1,
+                                                        color: AppColors.white,
+                                                      ),
+                                                      RotatedBox(
+                                                        quarterTurns: 3,
+                                                        child: Text(
+                                                          "Chi tiết",
+                                                          style: AppTextStyle
+                                                              .chooseText
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      maxWidth *
+                                                                          0.05),
                                                         ),
                                                       )
                                                     ],
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                maxWidth *
-                                                                    0.02),
-                                                    height: maxHeight * 0.15,
-                                                    width: 1,
-                                                    color: AppColors.white,
-                                                  ),
-                                                  RotatedBox(
-                                                    quarterTurns: 3,
-                                                    child: Text(
-                                                      "Chi tiết",
-                                                      style: AppTextStyle
-                                                          .chooseText
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  maxWidth *
-                                                                      0.05),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                            )
+                                          : SizedBox()
                                       : SizedBox(),
                                 )
                               : SizedBox()
